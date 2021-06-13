@@ -31,8 +31,6 @@ myConfig = "~/.config/qtile/config.py"  # The Qtile config file location
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
 
-
-
 #### COLORSCHEME ####
 
 colors = {
@@ -51,10 +49,63 @@ colors = {
 #### KEYBINDS ####
 
 keys = [
+    ### the essentials
     Key([mod, "shift"], "r",
         lazy.restart(),
         desc="Restart Qtile"
     ),
+    Key([mod, "shift"], "q",
+        lazy.shutdown(),
+        desc='Shutdown Qtile'
+    ),
+    Key([mod], "Tab",
+        lazy.next_layout(),
+        desc='Toggle through layouts'
+    ),
+
+    ### windows controls
+    Key([mod], "j",
+        lazy.layout.up(),
+        desc='Move focus up in current stack pane'
+    ),
+    Key([mod], "k",
+        lazy.layout.down(),
+        desc='Move focus up in current stack pane'
+    ),
+    Key([mod, "shift"], "j",
+        lazy.layout.shuffle_up(),
+        lazy.layout.section_up(),
+        desc='Move windows up in current stack'
+    ),
+    Key([mod, "shift"], "k",
+        lazy.layout.shuffle_down(),
+        lazy.layout.section_down(),
+        desc='Move windows down in current stack'
+    ),
+    Key([mod], "h",
+        lazy.layout.grow(),
+        lazy.layout.increase_nmaster(),
+        desc='Expand window (MonadTall), increase number in master pane (Tile)'
+    ),
+    Key([mod], "l",
+        lazy.layout.shrink(),
+        lazy.layout.decrease_nmaster(),
+        desc='Shrink window (MonadTall), decrease number in master pane (Tile)'
+    ),
+    Key([mod], "d",
+        lazy.window.toggle_fullscreen(),
+        desc='toggle fullscreen'
+    ),
+    Key([mod, "shift"], "f",
+        lazy.window.toggle_floating(),
+        desc='toggle floating'
+    ),
+    Key([mod], "space",
+        lazy.layout.next(),
+        desc='Switch window focus to other pane(s) of stack'
+    ),
+
+    ### launch apps
     Key([mod], "v",
         lazy.spawn(myTerm + " -e code"),
         desc="Launch Visual Studio Code"
@@ -67,7 +118,7 @@ keys = [
         lazy.spawn("kitty"),
         desc="Launch a Terminal"
     ),
-    Key([mod], "k",
+    Key([mod], "x",
         lazy.window.kill(),
         desc="Kill active window")
 ]
@@ -86,7 +137,7 @@ groups = [
         ]
 
 
-#### TOP BAR ####
+#### LAYOUTS ####
 
 layout_theme = {"border_width": 2,
                 "margin": 15,
@@ -95,41 +146,17 @@ layout_theme = {"border_width": 2,
                 }
 
 layouts = [
-    #layout.MonadWide(**layout_theme),
-    #layout.Bsp(**layout_theme),
-    #layout.Stack(stacks=2, **layout_theme),
-    #layout.Columns(**layout_theme),
-    #layout.RatioTile(**layout_theme),
-    #layout.Tile(shift_windows=True, **layout_theme),
-    #layout.VerticalTile(**layout_theme),
-    #layout.Matrix(**layout_theme),
-    #layout.Zoomy(**layout_theme),
     layout.MonadTall(**layout_theme),
-    layout.Max(**layout_theme),
-    layout.Stack(num_stacks=2),
+    layout.MonadWide(**layout_theme),
+    layout.Columns(**layout_theme),
     layout.RatioTile(**layout_theme),
-    layout.TreeTab(
-         font = "Ubuntu",
-         fontsize = 10,
-         sections = ["FIRST", "SECOND", "THIRD", "FOURTH"],
-         section_fontsize = 10,
-         border_width = 2,
-         bg_color = "1c1f24",
-         active_bg = "c678dd",
-         active_fg = "000000",
-         inactive_bg = "a9a1e1",
-         inactive_fg = "1c1f24",
-         padding_left = 0,
-         padding_x = 0,
-         padding_y = 5,
-         section_top = 10,
-         section_bottom = 20,
-         level_shift = 8,
-         vspace = 3,
-         panel_width = 200
-         ),
-    layout.Floating(**layout_theme)
+    layout.VerticalTile(**layout_theme),
+    layout.Matrix(**layout_theme),
+    layout.Zoomy(**layout_theme),
 ]
+
+
+#### TOP BAR ####
 
 top_bar=bar.Bar([
     widget.Sep(
@@ -283,17 +310,39 @@ top_bar=bar.Bar([
             fontsize = 35,
             font="Ubuntu Mono Nerd Font",
         ),
+    widget.CurrentLayout(
+            background = colors["red"],
+            foreground = colors["white"],
+            padding = 0,
+            margin = 0,
+            fontsize = 13,
+        ),
+    widget.Sep(
+        linewidth = 0,
+        padding = 6,
+        foreground = colors["white"],
+        background = colors["red"]
+        ),
+    widget.TextBox(
+            text = '',
+            background = colors["red"],
+            foreground = colors["black"],
+            padding = 0,
+            margin = 0,
+            fontsize = 35,
+            font="Ubuntu Mono Nerd Font",
+        ),
     widget.TextBox(
             text = "🕐",
             padding = 2,
             foreground = colors["white"],
-            background = colors["red"],
+            background = colors["black"],
             fontsize = 14,
             font="Ubuntu Mono Nerd Font",
         ),
     widget.Clock(
             foreground = colors["white"],
-            background = colors["red"],
+            background = colors["black"],
             format = " %A, %d %B - %H:%M "
         ),
 
@@ -302,9 +351,6 @@ top_bar=bar.Bar([
         ],
         opacity=1.0, 
         size=30)
-    
-
-
 
 
 #### SCREENS ####
