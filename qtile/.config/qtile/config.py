@@ -16,11 +16,11 @@
 
 ##### IMPORTS #####
 
-from libqtile import bar, widget, layout, qtile
+from libqtile import bar, widget, layout, qtile, hook
 from libqtile.command import lazy
 from libqtile.lazy import lazy
 from libqtile.config import Group, Key, Screen
-import os, socket
+import os, socket, subprocess
 
 
 ##### CONSTANTS #####
@@ -34,15 +34,15 @@ prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 #### COLORSCHEME ####
 
 colors = {
-        "black": "#1F2430", #Black Bacground,
-        "white": "#CBCCC6", #White Foreground
-        "pink": "#F28779", #Pink
-        "green": "#A6CC70", #Green
-        "yellow": "#FFCC66", #Yellow
-        "cyan": "#5CCFE6", #Cyan
-        "red": "#b30000", #Orange
-        "blue": "#77A8D9", #Blue
-        "grey": "#5C6773", #Grey
+        "black": "#1F2430",
+        "white": "#CBCCC6",
+        "pink": "#F28779",
+        "green": "#A6CC70",
+        "yellow": "#FFCC66",
+        "cyan": "#5CCFE6",
+        "red": "#b30000",
+        "blue": "#77A8D9",
+        "grey": "#5C6773",
 }
 
 
@@ -58,9 +58,47 @@ keys = [
         lazy.shutdown(),
         desc='Shutdown Qtile'
     ),
+    Key([mod, "shift"], "s",
+        lazy.spawn("shutdown now"),
+        desc='Shutdown Qtile'
+    ),
+    Key([mod], "x",
+        lazy.window.kill(),
+        desc="Kill active window"
+    ),
     Key([mod], "Tab",
         lazy.next_layout(),
         desc='Toggle through layouts'
+    ),
+
+    ### groups
+    Key([mod], "F1",
+        lazy.group["WWW"].toscreen(),
+        desc='Toggle WWW'
+    ),
+    Key([mod], "F2",
+        lazy.group["DEV"].toscreen(),
+        desc='Toggle DEV'
+    ),
+    Key([mod], "F3",
+        lazy.group["TERM"].toscreen(),
+        desc='Toggle TERM'
+    ),
+    Key([mod], "F4",
+        lazy.group["MUS"].toscreen(),
+        desc='Toggle MUS'
+    ),
+    Key([mod], "F5",
+        lazy.group["CHAT"].toscreen(),
+        desc='Toggle CHAT'
+    ),
+    Key([mod], "F6",
+        lazy.group["GFX"].toscreen(),
+        desc='Toggle GFX'
+    ),
+    Key([mod], "F7",
+        lazy.group["RAND"].toscreen(),
+        desc='Toggle RAND'
     ),
 
     ### windows controls
@@ -118,9 +156,14 @@ keys = [
         lazy.spawn("kitty"),
         desc="Launch a Terminal"
     ),
-    Key([mod], "x",
-        lazy.window.kill(),
-        desc="Kill active window")
+    Key([mod], "r",
+        lazy.spawn("rofi -show run"),
+        desc="Launch Rofi in run mode"
+    ),
+    Key([mod, "shift"], "r",
+        lazy.spawn("rofi -show window"),
+        desc="Launch Rofi in run mode"
+    ),
 ]
 
 
@@ -358,3 +401,9 @@ top_bar=bar.Bar([
 screens = [
     Screen(top=top_bar)
 ]
+
+
+
+@hook.subscribe.startup_once
+def start_once():
+    subprocess.call(['~/.config/qtile/autostart.sh'])

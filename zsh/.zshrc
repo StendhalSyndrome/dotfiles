@@ -46,7 +46,7 @@ function makezip() { zip -r "${1%%/}.zip" "$1" ; }
 
 function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
 
-mcd () {
+mkcd () {
     mkdir -p $1
     cd $1
 }
