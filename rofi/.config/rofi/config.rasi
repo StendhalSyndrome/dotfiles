@@ -30,7 +30,7 @@
 #window {
     background-color: @backgroundcolor;
     border-color: @separatorcolor;
-    border: 1;
+    border: 4;
     // border-radius: 2px;
 }
 

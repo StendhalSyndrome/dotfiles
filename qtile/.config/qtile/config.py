@@ -31,6 +31,11 @@ myConfig = "~/.config/qtile/config.py"  # The Qtile config file location
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
 
+@hook.subscribe.startup_once
+def autostart():
+    home = os.path.expanduser('~/.config/qtile/autostart.sh')
+    subprocess.call([home])
+
 #### COLORSCHEME ####
 
 colors = {
@@ -402,8 +407,3 @@ screens = [
     Screen(top=top_bar)
 ]
 
-
-
-@hook.subscribe.startup_once
-def start_once():
-    subprocess.call(['~/.config/qtile/autostart.sh'])
