@@ -1,6 +1,9 @@
 # Omega Theme
+
 PROMPT=$'%F{red}┌[%F{white}%n%f%F{red}@%F{white}%m%f%F{red}]
 %F{red}└[%f %F{white}%2~%f%F{red}]%f '
+
+path+=('/home/syndrome/bin')
 
 ### set common functions
 
@@ -59,9 +62,8 @@ alias ll="ls -lisa --color=auto"
 alias ls="ls -CF --color=auto"
 alias home="cd ~"
 alias mkdir="mkdir -pv"
-alias rm="rm -rf"
+alias rm="rm -rfv"
 alias wget="wget -c"
-alias histg="history | grep"
 alias myip="curl http://ipecho.net/plain; echo"
 alias grep='grep --color=auto'
 

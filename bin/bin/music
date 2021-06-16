@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo mount /dev/disk/by-label/Nouveau\\x20nom /mnt/
