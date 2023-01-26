@@ -1,20 +1,4 @@
-# _______________________________________________________________
-#|                                                               |
-#|    _____                 _                                    | 
-#|  / ____|               | |                           _        |
-#| | (___  _   _ _ __   __| |_ __ ___  _ __ ___   ___  ( ) ___   |
-#|  \___ \| | | | '_ \ / _` | '__/ _ \| '_ ` _ \ / _ \ |/ / __|  | 
-#|  ____) | |_| | | | | (_| | | | (_) | | | | | |  __/    \__ \  |
-#| |_____/ \__, |_| |_|\__,_|_|  \___/|_| |_| |_|\___|    |___/  |
-#|          __/ |                                                |
-#|         |___/   QTILE CONFIG FILE                             |
-#|                                                               |
-#|  <stendhalxsyndrome@protonmail.com>                           |
-#|_______________________________________________________________|
-#
-
-
-##### IMPORTS #####
+# imports
 
 from libqtile import bar, widget, layout, qtile, hook
 from libqtile.command import lazy
@@ -23,7 +7,7 @@ from libqtile.config import Group, Key, Screen
 import os, socket, subprocess
 
 
-##### CONSTANTS #####
+# constants
 
 mod = "mod4"  # Sets mod key to SUPER/WINDOWS
 myTerm = "kitty"  # My terminal of choice
@@ -36,7 +20,7 @@ def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call([home])
 
-#### COLORSCHEME ####
+# colorscheme
 
 colors = {
         "black": "#1F2430",
@@ -51,20 +35,16 @@ colors = {
 }
 
 
-#### KEYBINDS ####
+# keybinds
 
 keys = [
     ### the essentials
-    Key([mod, "shift"], "r",
-        lazy.restart(),
+    Key([mod, "shift"], "y",
+        lazy.reload_config(),
         desc="Restart Qtile"
     ),
     Key([mod, "shift"], "q",
         lazy.shutdown(),
-        desc='Shutdown Qtile'
-    ),
-    Key([mod, "shift"], "s",
-        lazy.spawn("shutdown now"),
         desc='Shutdown Qtile'
     ),
     Key([mod], "x",
@@ -106,6 +86,26 @@ keys = [
         desc='Toggle RAND'
     ),
 
+    ### sound
+    Key([mod, "shift"], "F5",
+        lazy.spawn("pamixer -d 5"),
+        desc='Volume down',
+    ),
+    Key([mod, "shift"], "F6",
+        lazy.spawn("pamixer -i 5"),
+        desc='Volume up',
+    ),
+
+    ### brightness
+    Key([mod, "shift"], "F3",
+        lazy.spawn("brightnessctl s 10%-"),
+        desc='Brightness down',
+    ),
+    Key([mod, "shift"], "F4",
+        lazy.spawn("brightnessctl s +10%"),
+        desc='Brightness uo',
+    ),
+
     ### windows controls
     Key([mod], "j",
         lazy.layout.up(),
@@ -137,11 +137,11 @@ keys = [
     ),
     Key([mod], "d",
         lazy.window.toggle_fullscreen(),
-        desc='toggle fullscreen'
+        desc='Toggle fullscreen'
     ),
     Key([mod, "shift"], "f",
         lazy.window.toggle_floating(),
-        desc='toggle floating'
+        desc='Toggle floating'
     ),
     Key([mod], "space",
         lazy.layout.next(),
@@ -150,8 +150,8 @@ keys = [
 
     ### launch apps
     Key([mod], "v",
-        lazy.spawn(myTerm + " -e code"),
-        desc="Launch Visual Studio Code"
+        lazy.spawn(myTerm + " -e nvim"),
+        desc="Launch Neovim"
     ),
     Key([mod], "f",
         lazy.spawn("firefox"),
@@ -169,10 +169,14 @@ keys = [
         lazy.spawn("rofi -show window"),
         desc="Launch Rofi in run mode"
     ),
+    Key([mod, "shift"], "e",
+        lazy.spawn("rofi -modi emoji -show emoji"),
+        desc="Launch Rofi in emoji selection mode"
+    ),
 ]
 
 
-#### GROUPS ####
+# groups
 
 groups = [
         Group("WWW"),
@@ -185,10 +189,10 @@ groups = [
         ]
 
 
-#### LAYOUTS ####
+# layouts
 
 layout_theme = {"border_width": 2,
-                "margin": 15,
+                "margin": 14,
                 "border_focus": colors["red"],
                 "border_normal": colors["black"]
                 }
@@ -204,7 +208,7 @@ layouts = [
 ]
 
 
-#### TOP BAR ####
+# top bar
 
 top_bar=bar.Bar([
     widget.Sep(
@@ -260,7 +264,6 @@ top_bar=bar.Bar([
             padding = 0,
             margin = 0,
             fontsize = 35,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.TextBox(
             text = "💾",
@@ -268,7 +271,6 @@ top_bar=bar.Bar([
             foreground = colors["white"],
             background = colors["red"],
             fontsize = 14,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.Memory(
             foreground = colors["white"],
@@ -283,24 +285,22 @@ top_bar=bar.Bar([
             padding = 0,
             margin = 0,
             fontsize = 35,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.TextBox(
-            text = "🌡️",
+            text = "🔋",
             padding = 2,
             foreground = colors["white"],
             background = colors["black"],
             fontsize = 14,
-            font="Ubuntu Mono Nerd Font",
         ),
-    widget.OpenWeather(
+    widget.Battery(
             foreground = colors["white"],
             background = colors["black"],
             threshold = 90,
             padding = 5,
-            cityid = 6455396,
-            language = "fr",
-            format = "{main_temp}°{units_temperature}, {weather_details}"
+            discharge_char ="↘️",
+            charge_char = "↗️",
+            format = "{char} {percent: 2.0%} ",
         ),
     widget.TextBox(
             text = '',
@@ -309,7 +309,6 @@ top_bar=bar.Bar([
             padding = 0,
             margin = 0,
             fontsize = 35,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.TextBox(
             text = "📥",
@@ -317,10 +316,21 @@ top_bar=bar.Bar([
             foreground = colors["white"],
             background = colors["red"],
             fontsize = 14,
-            font="Ubuntu Mono Nerd Font",
+        ),
+    widget.Wlan(
+            background = colors["red"],
+            foreground = colors["white"],
+            padding = 5,
+            format = "{essid}",
+        ),
+    widget.TextBox(
+            text = '/',
+            background = colors["red"],
+            foreground = colors["white"],
+            padding = 2,
         ),
     widget.Net(
-            interface = "enp37s0",
+            interface = "wlan0",
             format = '{down} ↓↑ {up}',
             foreground = colors["white"],
             background = colors["red"],
@@ -333,7 +343,6 @@ top_bar=bar.Bar([
             padding = 0,
             margin = 0,
             fontsize = 35,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.TextBox(
             text = "🔊",
@@ -341,13 +350,14 @@ top_bar=bar.Bar([
             foreground = colors["white"],
             background = colors["black"],
             fontsize = 14,
-            font="Ubuntu Mono Nerd Font",
         ),
-    widget.Volume(
-            foreground = colors["white"],
+    widget.GenPollText(
             background = colors["black"],
+            foreground = colors["white"],
             padding = 5,
-            mouse_callbacks = {'Button3': lambda: qtile.cmd_spawn('pavucontrol')},
+            margin = 25,
+            func = lambda: "\n" + subprocess.run(['pamixer', '--get-volume-human'], stdout=subprocess.PIPE).stdout.decode("utf-8"),
+            update_interval = 2,
         ),
     widget.TextBox(
             text = '',
@@ -356,7 +366,6 @@ top_bar=bar.Bar([
             padding = 0,
             margin = 0,
             fontsize = 35,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.CurrentLayout(
             background = colors["red"],
@@ -378,7 +387,6 @@ top_bar=bar.Bar([
             padding = 0,
             margin = 0,
             fontsize = 35,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.TextBox(
             text = "🕐",
@@ -386,7 +394,6 @@ top_bar=bar.Bar([
             foreground = colors["white"],
             background = colors["black"],
             fontsize = 14,
-            font="Ubuntu Mono Nerd Font",
         ),
     widget.Clock(
             foreground = colors["white"],
@@ -401,7 +408,7 @@ top_bar=bar.Bar([
         size=30)
 
 
-#### SCREENS ####
+# screens
 
 screens = [
     Screen(top=top_bar)
