@@ -17,8 +17,8 @@ prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
-    subprocess.call([home])
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/autostart.sh'])
 
 # colorscheme
 
