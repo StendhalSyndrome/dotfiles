@@ -1,4 +1,4 @@
-# imports
+# import libraries
 
 from libqtile import bar, widget, layout, qtile, hook
 from libqtile.command import lazy
@@ -13,11 +13,10 @@ mod = "mod4"  # Sets mod key to SUPER/WINDOWS
 myTerm = "kitty"  # My terminal of choice
 myConfig = "~/.config/qtile/config.py"  # The Qtile config file location
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
-
+home = os.path.expanduser('~')
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
 
 # colorscheme
@@ -172,6 +171,10 @@ keys = [
     Key([mod, "shift"], "e",
         lazy.spawn("rofi -modi emoji -show emoji"),
         desc="Launch Rofi in emoji selection mode"
+    ),
+    Key([mod, "shift"], "w",
+        lazy.spawn([home + "/.local/bin/wifimenu"]),
+        desc="Launch Rofi in wifi mode"
     ),
 ]
 

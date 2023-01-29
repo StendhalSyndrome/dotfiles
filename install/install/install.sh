@@ -7,7 +7,7 @@ sudo cp 30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
 sudo cp lightdm.conf /etc/lightdm/
 sudo cp lightdm-webkit2-greeter.conf /etc/lightdm/
 sudo cp ../../wallpapers/wallpapers/wallpaper.png /usr/share/backgrounds
-sudo systemctl start --now bluetooth.service 
+sudo systemctl enable --now bluetooth.service 
 sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 pip install iwlib
 cd ../..
