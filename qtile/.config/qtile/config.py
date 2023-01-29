@@ -173,8 +173,12 @@ keys = [
         desc="Launch Rofi in emoji selection mode"
     ),
     Key([mod, "shift"], "w",
-        lazy.spawn([home + "/.local/bin/wifimenu"]),
+        lazy.spawn([home + "/.local/bin/rofi-wifi"]),
         desc="Launch Rofi in wifi mode"
+    ),
+    Key([mod, "shift"], "b",
+        lazy.spawn([home + "/.local/bin/rofi-bluetooth"]),
+        desc="Launch Rofi in bluetooth mode"
     ),
 ]
 
