@@ -1,4 +1,5 @@
 # If you come from bash you might have to change your $PATH.
+fastfetch --kitty "/home/syndrome/wallpapers/term/$WALL"
 export PATH=$HOME/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.

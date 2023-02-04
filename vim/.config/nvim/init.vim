@@ -14,6 +14,7 @@ let g:airline_powerline_fonts = 1
 let g:sonokai_transparent_background = 1
 colorscheme sonokai
 
+
 " Keybindings
 nnoremap <A-d> :NvimTreeToggle<CR>
 nnoremap <A-D> :NvimTreeFocus<CR>
