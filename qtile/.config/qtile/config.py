@@ -181,7 +181,11 @@ keys = [
         desc="Launch Firefox"
     ),
     Key([mod], "t",
-        lazy.spawn("kitty"),
+        lazy.spawn(myTerm),
+        desc="Launch a Terminal"
+    ),
+     Key([mod], "e",
+        lazy.spawn(myTerm + " -e ranger"),
         desc="Launch a Terminal"
     ),
     Key([mod], "r",

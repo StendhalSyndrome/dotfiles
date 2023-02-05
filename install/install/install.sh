@@ -60,6 +60,10 @@ paruinstaller() {
     cd $installdir
 }
 
+rangerplug() {
+    git clone https://github.com/alexanderjeurissen/ranger_devicons /home/$name/.config/ranger/plugins/ranger_devicons
+}
+
 servicestarter() {
     sudo systemctl enable --now bluetooth.service 
 }
@@ -79,9 +83,7 @@ laptopconf
 lightdmconf
 ohmyzshinstaller
 paruinstaller
+rangerplug
 paru -Sy $fonts $app $tools $omega_dep $aurinstall
 pip install $pipinstall
 dotfilesinstaller
-
-
-
