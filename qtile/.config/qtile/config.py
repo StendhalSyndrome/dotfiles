@@ -107,7 +107,7 @@ keys = [
 
     ### sound
     Key([mod, "shift"], "F5",
-        lazy.spawn("pamixer -d 5"),
+        lazy.spawn(home + "/.local/bin/changevolume down"),
         desc='Volume down',
     ),
     Key([mod, "shift"], "F6",

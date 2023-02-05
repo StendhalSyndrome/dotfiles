@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Get a list of available wifi connections and morph it into a nice-looking list
+notify-send "Recherche des connections Wi-Fi possibles..."
 wifi_list=$(nmcli --fields "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' | sed -E "s/WPA*.?\S/🔒 /g" | sed "s/^--/🔓 /g" | sed "s/🔒  🔒/🔒/g" | sed "/--/d")
 
 connected=$(nmcli -fields WIFI g)
