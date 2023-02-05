@@ -19,6 +19,20 @@ home = os.path.expanduser('~')
 def autostart():
     subprocess.call([home + '/.config/qtile/autostart.sh'])
 
+@lazy.function
+def window_to_prev_group(qtile):
+    i = qtile.groups.index(qtile.current_group)
+    if qtile.current_window is not None and i != 0:
+        qtile.current_window.togroup(qtile.groups[i - 1].name)
+        qtile.current_screen.toggle_group(qtile.groups[i - 1])
+
+@lazy.function
+def window_to_next_group(qtile):
+    i = qtile.groups.index(qtile.current_group)
+    if qtile.current_window is not None and i != 6:
+        qtile.current_window.togroup(qtile.groups[i + 1].name)
+        qtile.current_screen.toggle_group(qtile.groups[i + 1])
+
 # colorscheme
 
 colors = {
@@ -146,6 +160,16 @@ keys = [
         lazy.layout.next(),
         desc='Switch window focus to other pane(s) of stack'
     ),
+    Key([mod, "shift"], "h",
+        window_to_prev_group(),
+        desc='Move window to previous group'
+    ),
+    Key([mod, "shift"], "l",
+        window_to_next_group(),
+        desc='Move window to next group'
+    ),
+
+
 
     ### launch apps
     Key([mod], "v",
