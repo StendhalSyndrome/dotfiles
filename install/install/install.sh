@@ -71,9 +71,9 @@ servicestarter() {
 fonts=(ttf-firacode-nerd noto-fonts-emoji)
 apps=(firefox audacity gimp ranger nvim)
 tools=(unzip)
-omega_dep=(git picom nitrogen wget stow rofi rofi-emoji pamixer bpytop zsh kitty bluez bluez-utils iwd xdotool xclip brightnessctl xf86-input-libinput libinput npm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan python-pip)
+omega_dep=(dunst git picom nitrogen wget stow rofi rofi-emoji pamixer bpytop zsh kitty bluez bluez-utils iwd xdotool xclip brightnessctl xf86-input-libinput libinput npm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan python-pip)
 pipinstall=(iwlib)
-aurinstall=(fastfetch)
+aurinstall=(fastfetch tomatoshell)
 
 welcomemsg
 getuser

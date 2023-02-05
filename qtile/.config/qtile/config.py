@@ -68,6 +68,12 @@ keys = [
         lazy.next_layout(),
         desc='Toggle through layouts'
     ),
+    Key([mod], "w",
+        lazy.spawn("betterlockscreen -l"),
+        desc='Lock the screen'
+    ),
+
+
 
     ### groups
     Key([mod], "F1",
