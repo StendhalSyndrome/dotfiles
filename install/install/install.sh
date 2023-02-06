@@ -60,6 +60,11 @@ paruinstaller() {
     cd $installdir
 }
 
+vimpluginstaller() {
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+}
+
 rangerplug() {
     git clone https://github.com/alexanderjeurissen/ranger_devicons /home/$name/.config/ranger/plugins/ranger_devicons
 }
@@ -68,12 +73,12 @@ servicestarter() {
     sudo systemctl enable --now bluetooth.service 
 }
 
-fonts=(ttf-firacode-nerd noto-fonts-emoji)
-apps=(firefox audacity gimp ranger nvim)
-tools=(unzip)
-omega_dep=(dunst git picom nitrogen wget stow rofi rofi-emoji pamixer bpytop zsh kitty bluez bluez-utils iwd xdotool xclip brightnessctl xf86-input-libinput libinput npm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan python-pip)
-pipinstall=(iwlib)
-aurinstall=(fastfetch tomatoshell)
+fonts="ttf-firacode-nerd noto-fonts-emoji"
+apps="firefox audacity gimp ranger nvim"
+tools="unzip"
+omega_dep="dunst git picom nitrogen wget stow rofi rofi-emoji pamixer bpytop zsh kitty bluez bluez-utils iwd xdotool xclip brightnessctl xf86-input-libinput libinput npm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan python-pip"
+pipinstall="iwlib"
+aurinstall="fastfetch tomatoshell"
 
 welcomemsg
 getuser
@@ -81,9 +86,10 @@ getdotfilesdir
 pacmanconf
 laptopconf
 lightdmconf
-ohmyzshinstaller
 paruinstaller
 rangerplug
-paru -Sy $fonts $app $tools $omega_dep $aurinstall
+paru -Sy $fonts $apps $tools $omega_dep $aurinstall
 pip install $pipinstall
+vimpluginstaller
+ohmyzshinstaller
 dotfilesinstaller
