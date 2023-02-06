@@ -38,6 +38,7 @@ laptopconf() {
 lightdmconf() {
     sudo cp lightdm.conf /etc/lightdm/
     sudo cp lightdm-webkit2-greeter.conf /etc/lightdm/
+    mkdir /usr/share/backgrounds
     sudo cp ../../wallpapers/wallpapers/wallpaper.png /usr/share/backgrounds
 }
 
@@ -60,6 +61,10 @@ paruinstaller() {
     cd $installdir
 }
 
+lockscreenconf() {
+    betterlockscreen -u "/home/syndrome/wallpapers/wallpaper.png"
+}
+
 vimpluginstaller() {
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -78,18 +83,20 @@ apps="firefox audacity gimp ranger nvim"
 tools="unzip reflector"
 omega_dep="dunst git picom nitrogen wget stow rofi rofi-emoji pamixer bpytop zsh kitty bluez bluez-utils iwd xdotool xclip brightnessctl xf86-input-libinput libinput npm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan python-pip"
 pipinstall="iwlib"
-aurinstall="fastfetch tomatoshell"
+aurinstall="fastfetch tomatoshell betterlockscreen"
 
 welcomemsg
 getuser
 getdotfilesdir
 pacmanconf
 laptopconf
-lightdmconf
 paruinstaller
 rangerplug
+rm -rf /usr/share/backgrounds
 paru -Sy $fonts $apps $tools $omega_dep $aurinstall
 pip install $pipinstall
+lightdmconf
 vimpluginstaller
 ohmyzshinstaller
 dotfilesinstaller
+lockscreenconf
