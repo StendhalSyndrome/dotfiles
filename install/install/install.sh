@@ -100,3 +100,4 @@ vimpluginstaller
 ohmyzshinstaller
 dotfilesinstaller
 lockscreenconf
+servicestarter
