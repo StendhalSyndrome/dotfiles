@@ -11,3 +11,8 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 export LESS_TERMCAP_so=$'\e[45;93m'
 
 export MANPAGER="less -R --use-color"
+
+export GTK_IM_MODULE='fcitx'
+export QT_IM_MODULE=dw'fcitx'
+export SDL_IM_MODULE='fcitx'
+export XMODIFIERS='@im=fcitx'

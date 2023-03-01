@@ -6,6 +6,10 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
+Plug 'ellisonleao/glow.nvim'
+Plug 'preservim/vim-pencil'
 call plug#end()
 
 " Colorscheme
@@ -75,4 +79,5 @@ require'nvim-treesitter.configs'.setup {
   require("nvim-tree").setup(),
 
 }
+require('glow').setup({style = "dark", width=120})
 EOF
