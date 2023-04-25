@@ -79,7 +79,7 @@ servicestarter() {
 }
 
 fonts="ttf-firacode-nerd noto-fonts-emoji wqy-zenhei"
-apps="firefox audacity gimp ranger nvim"
+apps="firefox audacity gimp ranger neovim vlc"
 tools="unzip reflector udisks2"
 omega_dep="dunst git picom nitrogen wget stow rofi rofi-emoji pamixer bpytop zsh kitty bluez bluez-utils iwd xdotool xclip brightnessctl xf86-input-libinput libinput npm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan python-pip"
 pipinstall="iwlib"
@@ -93,11 +93,12 @@ laptopconf
 paruinstaller
 rangerplug
 rm -rf /usr/share/backgrounds
-paru -Sy $fonts $apps $tools $omega_dep $aurinstall
+paru -Sy $fonts $apps $tools $omega_dep 
+paru -Sy $aurinstall
 pip install $pipinstall
-lightdmconf
 vimpluginstaller
 ohmyzshinstaller
 dotfilesinstaller
 lockscreenconf
 servicestarter
+lightdmconf
