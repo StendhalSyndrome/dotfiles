@@ -13,12 +13,12 @@ getuser() {
         # Checks username validity
 	while ! echo "$name" | grep -q "^[a-z_][a-z0-9_-]*$"; do
 		echo "Username not valid."
-        getuserandpass
+        getuser
 	done
         # Checks if the user exists
     while ! id -u "$name" >/dev/null 2>&1 ; do
         echo "This user does not exist."
-        getuserandpass
+        getuser
     done
 }
 
