@@ -4,6 +4,7 @@ from libqtile import bar, widget, layout, qtile, hook
 from libqtile.command import lazy
 from libqtile.lazy import lazy
 from libqtile.config import Group, Key, Screen
+from Xlib import display as xdisplay
 import os, socket, subprocess
 
 
@@ -15,9 +16,35 @@ myConfig = "~/.config/qtile/config.py"  # The Qtile config file location
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 home = os.path.expanduser('~')
 
+def get_num_monitors():
+    num_monitors = 0
+    try:
+        display = xdisplay.Display()
+        screen = display.screen()
+        resources = screen.root.xrandr_get_screen_resources()
+
+        for output in resources.outputs:
+            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
+            preferred = False
+            if hasattr(monitor, "preferred"):
+                preferred = monitor.preferred
+            elif hasattr(monitor, "num_preferred"):
+                preferred = monitor.num_preferred
+            if preferred:
+                num_monitors += 1
+    except Exception as e:
+        # always setup at least one monitor
+        return 1
+    else:
+        return num_monitors
+
 @hook.subscribe.startup_once
 def autostart():
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+@hook.subscribe.screen_change
+def restart_on_randr(_):
+	qtile.cmd_reload_config()
 
 @lazy.function
 def window_to_prev_group(qtile):
@@ -451,7 +478,11 @@ top_bar=bar.Bar([
 
 # screens
 
+num_monitors = get_num_monitors()
 screens = [
     Screen(top=top_bar)
 ]
 
+if num_monitors > 1:
+    for m in range(num_monitors - 1):
+        screens.append(Screen(top=top_bar))        
