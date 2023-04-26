@@ -105,7 +105,7 @@ fonts="ttf-firacode-nerd noto-fonts-emoji wqy-zenhei"
 apps="firefox audacity gimp ranger neovim vlc"
 tools="unzip reflector udisks2"
 omega_dep="dunst git picom nitrogen wget stow rofi rofi-emoji pamixer bpytop zsh kitty bluez bluez-utils iwd xdotool xclip brightnessctl xf86-input-libinput libinput npm lightdm-webkit2-greeter lightdm-webkit-theme-litarvan python-pip"
-pipinstall="iwlib"
+pipinstall="iwlib python-xlib"
 aurinstall="fastfetch tomatoshell betterlockscreen"
 
 # Directories
