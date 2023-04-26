@@ -41,8 +41,9 @@ laptopconf() {
 lightdmconf() {
     # Sets lightdm theme
     echo "Configuring lightdm..."
-    sudo cp lightdm.conf /etc/lightdm/
-    sudo cp lightdm-webkit2-greeter.conf /etc/lightdm/
+    cd $installdir
+    sudo cp $dotfilesdir/install/install/lightdm.conf /etc/lightdm/
+    sudo cp $dotfilesdir/install/install/lightdm-webkit2-greeter.conf /etc/lightdm/
     mkdir /usr/share/backgrounds
     sudo cp $dotfilesdir/wallpapers/wallpapers/wallpaper.png /usr/share/backgrounds
     echo "Done."
@@ -51,6 +52,7 @@ lightdmconf() {
 ohmyzshinstaller() {
     echo "Installing Oh-My-Zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended > /dev/null
+    chsh -s $(which zsh)
     echo "Done."
 }
 
